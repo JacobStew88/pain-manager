@@ -1,0 +1,49 @@
+<div class="pageDescription">
+  <div class="white-background">
+    <div class="pain-level-container">
+      <!-- Pain scale image -->
+      <img src="/assets/Pain-Scale2--Arvin61r58.svg" alt="Diagram of pain level" class="pain-image">
+
+      <!-- Transparent overlay divs for highlighting -->
+      <div class="pain-overlay" data-pain="No Pain" style="top:60%; left:9.5%; width:10%; height:17.5%; border-radius:50%;"></div>
+      <div class="pain-overlay" data-pain="Mild" style="top:60%; left:25.5%; width:10%; height:17.5%; border-radius:50%;"></div>
+      <div class="pain-overlay" data-pain="Moderate" style="top:60%; left:41.3%; width:10%; height:17.5%; border-radius:50%;"></div>
+      <div class="pain-overlay" data-pain="Severe" style="top:60%; left:57.3%; width:10%; height:17.5%; border-radius:50%;"></div>
+      <div class="pain-overlay" data-pain="Very Severe" style="top:60%; left:73%; width:10%; height:17.5%; border-radius:50%;"></div>
+      <div class="pain-overlay" data-pain="Worst Pain Possible" style="top:60%; left:89%; width:10%; height:17.5%; border-radius:50%;"></div>
+
+      <div class="pain-description" id="selected-pain">Selected Pain Level: None</div>
+    </div>
+  </div>
+</div>
+
+<h1>SELECT PAIN LEVEL</h1>
+
+<script>
+  const painOverlays = document.querySelectorAll('.pain-overlay');
+  const selectedDiv = document.getElementById('selected-pain');
+
+  painOverlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+      // Remove highlight from other overlays
+      painOverlays.forEach(o => o.classList.remove('selected'));
+
+      // Highlight clicked overlay
+      overlay.classList.add('selected');
+
+      // Show selected pain level
+      const painLevel = overlay.dataset.pain;
+      selectedDiv.textContent = `Selected Pain Level: ${painLevel}`;
+    });
+  });
+</script>
+<!-- 
+<div id="start-tutorial" class="button">
+            <span class="pop-up-buttons">
+                <form action="/pain-level" method="GET">
+                    <button type="submit">NEXT</button>
+                </form>
+                <span class="arrow arrow-right"></span>
+            </span>
+    </div>
+-->

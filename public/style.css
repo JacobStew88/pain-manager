@@ -1,0 +1,391 @@
+/* ========== Layout ========== */
+body {
+  font-family: serif;
+  background-color: #101010;
+  color: #ececec;
+  padding: 0;
+  text-shadow: 1px 1px 2px black;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+
+}
+
+
+/* ========== Navigation ========== */
+nav {
+  top: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  background-color: #222222;
+  z-index: 1000;
+  padding: 0 32px;
+  box-sizing: border-box;
+  gap: 32px;
+  position: fixed;
+}
+
+nav::before,
+nav::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0;        /* full width */
+  height: 1px;              /* one-pixel tall */
+  pointer-events: none;     /* don’t block clicks */
+}
+
+nav::before {
+  background: #181818;      /* the darker line */
+  bottom: 2px;              /* sits 2px above the bottom edge */
+}
+
+nav::after {
+  background: #444;         /* the lighter line */
+  bottom: 1px;              /* sits 1px above the bottom edge */
+}
+
+.nav-links {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-grow: 0;
+}
+
+.nav-left-spacer {
+  margin-right: auto;
+  width: 100px;
+}
+
+.nav-reset {
+  margin-left: auto;
+  width: 100px;
+}
+
+.nav-reset a {
+  color: #ff4d4d;
+  text-decoration: none;
+}
+
+nav h1, nav a, .dropdown {
+    margin-top: 16px;
+    align-self: stretch;      
+    text-align: center;        
+    color: #ecececc0;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 18px;
+    text-shadow: 0px 0px 0px black;
+}
+
+
+nav a:hover {
+    color: var(--accent);
+}
+
+
+/* Main Content */
+main {
+    flex-grow: 1;
+    padding-top: 200px;
+    max-width: 960px;
+    padding-bottom: 96px;
+    width: 100%;
+  }
+
+
+
+/* Page Headings */
+h1, h2 {
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: #ececec;
+    text-align: center;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+h1 {
+    font-size: 2.5em;
+}
+
+/* Page Description */
+.pageDescription {
+    margin: 8px 32px 16px 32px;
+    font-size: 1.2em;
+    line-height: 1.5;
+    color: #ececec;
+    text-align: center;
+    text-justify: inter-word;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+
+/* ========== Footer ========== */
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #c9c9c9;
+    font-size: 0.8em;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Form Line */
+.form-row-inline {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  margin-top: 5px;
+}
+
+
+/* Tables */
+table {
+    width: 100%;
+  text-align: center;
+  color: #d6d2d2;
+  table-layout: auto;;
+}
+
+/* Scroll container */
+.scrollable-table {
+  max-height: 600px;
+  overflow-y: auto;
+  display: block;
+}
+
+/* Custom scrollbar */
+.scrollable-table::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scrollable-table::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+.scrollable-table::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 6px;
+}
+
+/* Firefox support */
+.scrollable-table {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) #000000;
+}
+
+tbody tr:hover {
+    background-color: #181818;
+}
+
+tbody tr {
+    background-color: #202020;
+}
+
+thead tr {
+    background-color: #303030;
+    color: var(--accent);
+}
+
+th, td {
+  border-top: 1px solid #181818;
+  padding: 2px;
+
+}
+
+/* Forms */
+input, select {
+    margin-bottom: 4px;
+    margin-right: 12px;
+}
+
+.cuForm {
+    padding-top: 15px;
+}
+
+button {
+    white-space: nowrap;
+    min-width: unset;
+    background: radial-gradient(#087fcf, #087fcf);    
+    border: 2px solid #000000;
+    border-radius: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 1px;
+    padding-bottom: 6px;
+
+    font-weight: bold;
+    font-family: 'Arial Narrow', Arial, sans-serif;
+    font-size: 18px;
+    color: #e4ba02;
+    letter-spacing: 0.5px;
+
+    text-shadow:
+        1px 1px 1px black,
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+
+    box-shadow:
+        inset 0 1px 0 #c0d9df,
+        inset 0 -2px 0 #026067,
+        0 0 0 1px #6d6c6c,
+        0px 0px 5px #000000;      
+
+    cursor: pointer;
+}
+
+/* Hover effect with center highlight */
+button:hover {
+  background: radial-gradient(ellipse at center, #037407 40%, #7cdf55 100%);
+  color: #fff;
+  box-shadow:
+    inset 0 1px 0 #037407,
+    inset 0 -2px 0 #7cdf55,
+    0 0 0 1px #888;
+}
+
+/* Pressed effect */
+button:active {
+  background: radial-gradient(ellipse at center, #900000 30%, #400000 100%);
+  box-shadow:
+    inset 0 3px 6px #300000,    /* deeper inner shadow for pressed look */
+    0 0 0 1px #444,
+    inset 0 2px 0 #000000;
+    padding-top: 3px;
+    padding-bottom: 4px;
+}
+
+.pop-up-buttons {
+  display: flex;
+  gap: 50px;        /* space between buttons */
+  justify-content: center;
+  align-items: center;
+}
+
+.pop-up-buttons form {
+  margin-top: 0%;        /* prevents form spacing issues */
+}
+
+.arrow {
+  font-size: 26px;
+  color: #e4ba02;
+  user-select: none;
+  
+  text-shadow:
+    1px 1px 1px black,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+}
+.arrow-left::before {
+  content: "◀";
+}
+.arrow-right::before {
+  content: "▶";
+}
+.arrow-left {
+  margin-right: -40px;
+  margin-top: 0%;
+}
+.arrow-right {
+  margin-left: -40px;
+  margin-top: 0%;
+}
+
+.muscle-image {
+    display: block;             /* makes it a block so margin works */
+    margin: 0 auto 20px auto;   /* centers image, adds space below */
+    width: 69%;
+    max-width: none;           /* adjusts size for your layout */
+    height: auto;               /* keeps image proportional */
+}
+
+.white-background {
+    background-color: white;             /* white card */
+    display: inline-block;               /* shrink to fit content */
+    padding: 25px 35px;                  /* space inside the card */
+    border-radius: 12px;                 /* rounded corners */
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1); /* subtle shadow */
+    text-align: center;                  /* center content */
+    margin: 50px auto;                   /* center on page */
+}
+
+/* Optional: make image responsive */
+.pain-image {
+    max-width: 100%;
+    height: auto;
+    position: relative;
+    display: inline-block; /* image fits naturally */
+    
+}
+
+  .white-background {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 900px;
+    margin: 50px auto;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+  }
+
+  .pain-level-container {
+    position: relative;
+    display: inline-block;
+  }
+
+  .pain-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .pain-overlay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 107, 107, 0); /* invisible initially */
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+
+  .pain-overlay.selected {
+    background: rgba(255, 107, 107, 0.5);
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
+  }
+
+  .pain-description {
+    margin-top: 20px;
+    font-size: 1.2em;
+  }
+
+.pain-description {
+    font-size: 26px;
+    color: #e4ba02;
+    user-select: none;
+    text-shadow:
+        1px 1px 1px black,
+        -1px -1px 0 #000,
+        1px -1px 0 #000,
+        -1px 1px 0 #000;
+}
