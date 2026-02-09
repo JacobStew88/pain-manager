@@ -1,13 +1,140 @@
+<!-- muscle page overlays/text -->
+<body></body>
 <div class="pageDescription">
-    <img src="/assets/Muscles_front_and_back.svg" alt="Diagram of muscle groups" class="muscle-image">
+    <div class="muscle-map-container">
+    <img src="/assets/Muscles_front_and_back.svg" 
+        alt="Diagram of muscle groups" 
+        class="muscle-image">
+
     <h1>SELECT A MUSCLE GROUP</h1>
+        <!--Chest-->
+        <div class="muscle-overlay" data-muscle="chest"
+            style="top:23%; left:33%; width:10%; height:8%;"></div>
+
+        <!--right shoulder-->
+        <div class="muscle-overlay" data-muscle="shoulders"
+            style="top:14%; left:25%; width:2.5%; height:8%; transform: rotate(39deg);"></div> 
+        <!--left shoulder-->
+        <div class="muscle-overlay" data-muscle="shoulders"
+            style="top:14%; left:38%; width:2.5%; height:8%; transform: rotate(-39deg);"></div> 
+
+        <!--right bicep-->
+        <div class="muscle-overlay" data-muscle="biceps"
+             style="top:22.5%; left:23.5%; width:3%; height:8%; transform: rotate(16deg);"></div>
+        <!--left bicep-->
+        <div class="muscle-overlay" data-muscle="biceps"
+             style="top:22.5%; left:39.2%; width:3%; height:8%; transform: rotate(-16deg);"></div>   
+
+        <!--right forearm-->
+        <div class="muscle-overlay" data-muscle="forearms"
+            style="top:33%; left:20.5%; width:3%; height:10%; transform: rotate(21deg);"></div> 
+        <!--left forearm-->
+        <div class="muscle-overlay" data-muscle="forearms"
+            style="top:33%; left:42.5%; width:3%; height:10%; transform: rotate(-22deg);"></div> 
+
+        <!--abs-->
+        <div class="muscle-overlay" data-muscle="abs"
+            style="top:34%; left:32.9%; width:5%; height:12%;"></div>
+
+        <!--right quad-->
+        <div class="muscle-overlay" data-muscle="quads"
+            style="top:50%; left:30%; width:4%; height:12%;"></div>  
+        <!--left quad-->
+        <div class="muscle-overlay" data-muscle="quads"
+            style="top:50%; left:35.5%; width:4%; height:12%;"></div> 
+        
+        <!--right shin-->
+        <div class="muscle-overlay" data-muscle="shins"
+            style="top:66%; left:30%; width:3%; height:11%;"></div> 
+        <!--left shin-->
+        <div class="muscle-overlay" data-muscle="shins"
+            style="top:66%; left:35.5%; width:3%; height:11%;"></div> 
+
+<!---------BACK OF MUSCLE SYSTEM-------->
+
+        <!--Back-->
+        <div class="muscle-overlay" data-muscle="back"
+            style="top:25%; right:22%; width:9%; height:14%;"></div>
+
+        <!--right shoulder-->
+        <div class="muscle-overlay" data-muscle="shoulders"
+            style="top:15%; right:24%; width:1.7%; height:8%; transform: rotate(-47deg);"></div> 
+        <!--left shoulder-->
+        <div class="muscle-overlay" data-muscle="shoulders"
+            style="top:15%; right:36%; width:1.7%; height:8%; transform: rotate(47deg);"></div> 
+
+        <!--right tricep-->
+        <div class="muscle-overlay" data-muscle="triceps"
+             style="top:24%; right:23%; width:2%; height:8%; transform: rotate(-9deg);"></div>
+        <!--left tricep-->
+        <div class="muscle-overlay" data-muscle="triceps"
+             style="top:24%; right:37%; width:2%; height:8%; transform: rotate(9deg);"></div> 
+
+        <!--right hamstring-->
+        <div class="muscle-overlay" data-muscle="hamstrings"
+            style="top:50%; right:25.5%; width:3%; height:12%;"></div>  
+        <!--left hamstring-->
+        <div class="muscle-overlay" data-muscle="hamstrings"
+            style="top:50%; right:30.5%; width:3%; height:12%;"></div> 
+
+        <!--right calf-->
+        <div class="muscle-overlay" data-muscle="calfs"
+            style="top:63%; right:25.7%; width:3%; height:10%;"></div> 
+        <!--left calf-->
+        <div class="muscle-overlay" data-muscle="calfs"
+            style="top:63%; right:30.5%; width:3%; height:10%;"></div>             
+    </div>    
 </div>
 
-<div id="start-tutorial" class="button">
-            <span class="pop-up-buttons">
-                <form action="/pain-level" method="GET">
-                    <button type="submit">NEXT</button>
-                </form>
-                <span class="arrow arrow-right"></span>
-            </span>
+
+    <div id="start-tutorial" 
+        class="button">
+        <span class="pop-up-buttons">
+            <form action="/pain-level" method="GET">
+                <button type="submit">NEXT</button>
+            </form>
+            <span class="arrow arrow-right"></span>
+        </span>
     </div>
+</div>
+
+<script>
+const overlays = document.querySelectorAll('.muscle-overlay');
+const selectedText = document.getElementById('selected-muscle');
+const hiddenInput = document.getElementById('muscle-input');
+const nextBtn = document.querySelector('.next-button');
+
+let activeMuscle = null;
+
+overlays.forEach(overlay => {
+    overlay.addEventListener('click', () => {
+        const muscle = overlay.dataset.muscle;
+
+        // If clicking the already-selected muscle → toggle off
+        if (activeMuscle === muscle) {
+            document
+                .querySelectorAll(`.muscle-overlay[data-muscle="${muscle}"]`)
+                .forEach(o => o.classList.remove('selected'));
+
+            activeMuscle = null;
+            selectedText.textContent = 'Selected muscle: None';
+            hiddenInput.value = '';
+            nextBtn.disabled = true;
+            return;
+        }
+
+        // Otherwise: select new muscle
+        overlays.forEach(o => o.classList.remove('selected'));
+
+        document
+            .querySelectorAll(`.muscle-overlay[data-muscle="${muscle}"]`)
+            .forEach(o => o.classList.add('selected'));
+
+        activeMuscle = muscle;
+        selectedText.textContent = `Selected muscle: ${muscle}`;
+        hiddenInput.value = muscle;
+        nextBtn.disabled = false;
+    });
+});
+</script>
+</body>

@@ -68,9 +68,7 @@ app.get('/pain-level', async function (req, res) {
 });
 
 
-
 // LISTENER
-
 app.listen(PORT, function () {
     console.log(
         'Express started on http://localhost:' +

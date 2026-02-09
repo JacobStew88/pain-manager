@@ -389,3 +389,35 @@ button:active {
         1px -1px 0 #000,
         -1px 1px 0 #000;
 }
+
+.muscle-map-container {
+    position: relative;
+    display: inline-block;
+}
+
+.muscle-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Invisible selectable areas */
+.muscle-overlay {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    background: rgba(255, 107, 107, 0); /* invisible initially */
+    transition: background 0.2s, box-shadow 0.2s;
+    border-radius: 12px;
+}
+
+/* Highlight on selection */
+.muscle-overlay.selected {
+    background: rgba(213, 213, 12, 0.886);
+    box-shadow: 0 0 15px rgba(236, 240, 21, 0.7);
+}
+
+#selected-muscle {
+    margin-top: 15px;
+    font-size: 1.1em;
+}
