@@ -5,7 +5,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = 8000
+const PORT = 3000
 
 // Handlebars
 const { engine } = require('express-handlebars');
@@ -65,6 +65,41 @@ app.get('/pain-level', async function (req, res) {
         // Send a generic error message to the browser
         res.status(500).send('An error occurred while rendering the page.');
     }
+});
+
+// GET Calendar
+app.get('/calendar', async function (req, res) {
+    try {
+        res.render('calendar'); // Render the tutorial.hbs file
+    } catch (error) {
+        console.error('Error rendering page:', error);
+        // Send a generic error message to the browser
+        res.status(500).send('An error occurred while rendering the page.');
+    }
+});
+
+app.post('/download-ics', async (req, res) => {
+  try {
+    const response = await fetch('http://localhost:8080/ics', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(req.body)
+    });
+
+    if (!response.ok) {
+      throw new Error('ICS service failed');
+    }
+
+    const icsData = await response.text();
+
+    res.setHeader('Content-Type', 'text/calendar');
+    res.setHeader('Content-Disposition', 'attachment; filename="event.ics"');
+    res.send(icsData);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to generate calendar file');
+  }
 });
 
 

@@ -1,0 +1,40 @@
+<!-- Calendar layout -->
+<h1>Calendar</h1>
+<div class="pageDescription">
+</head>
+      <form id="icsForm">
+        <div class="mb-3">
+          <label class="form-label">Event Name</label>
+          <input type="text" class="form-control" name="event_name" placeholder="Enter event name" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Start Date & Time</label>
+          <input type="datetime-local" class="form-control" name="start" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">End Date & Time</label>
+          <input type="datetime-local" class="form-control" name="end" required>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Location</label>
+          <input type="text" class="form-control" name="location" placeholder="Enter location">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Description</label>
+          <textarea class="form-control" name="description" placeholder="Enter description"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Download ICS</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- External JS for ICS download -->
+<script src="/js/download-ics.js"></script>
+</body>
+</html>
