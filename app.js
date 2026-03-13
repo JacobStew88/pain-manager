@@ -6,6 +6,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 const PORT = 3000
+const NOTES_SERVICE = "http://localhost:8081";
 
 // Handlebars
 const { engine } = require('express-handlebars');
@@ -102,12 +103,75 @@ app.post('/download-ics', async (req, res) => {
   }
 });
 
+app.get('/notes', async (req, res) => {
+  try {
+
+    const response = await fetch(`${NOTES_SERVICE}/notes`);
+
+    if (!response.ok) {
+      throw new Error('Notes service failed');
+    }
+
+    const notes = await response.json();
+
+    res.render('notes', { notes });
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).send('Failed to load notes');
+
+  }
+});
+
+app.post('/notes', async (req, res) => {
+  try {
+
+    const response = await fetch(`${NOTES_SERVICE}/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(req.body)
+    });
+
+    if (!response.ok) {
+      throw new Error('Notes service failed');
+    }
+
+    res.redirect('/notes');
+
+  } catch (error) {
+
+    console.error(error);
+    res.status(500).send('Failed to create note');
+
+  }
+});
+
+app.post('/notes/delete/:id', async (req, res) => {
+  try {
+    const noteId = req.params.id;
+
+    const response = await fetch(`http://localhost:8081/notes/${noteId}`, {
+      method: 'DELETE'
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to delete note');
+    }
+
+    res.redirect('/notes'); // reload the notes page after deletion
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Failed to delete note');
+  }
+});
+
 
 // LISTENER
 app.listen(PORT, function () {
     console.log(
-        'Express started on http://localhost:' +
-            PORT +
-            '; press Ctrl-C to terminate.'
-    );
+        'Express started on http://localhost:' + PORT + '; press Ctrl-C to terminate.');
 });
