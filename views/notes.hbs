@@ -1,9 +1,7 @@
 <!-- Notes layout -->
 <h1>Notes</h1>
-<div class="pageDescription">
 </head>
 <form method="POST" action="/notes">
-
   <div>
     <label>Title</label><br>
     <input type="text" name="title" required>
@@ -12,22 +10,30 @@
     <label>Content</label><br>
     <textarea name="content" rows="4" required></textarea>
   </div>
+  <div>
+    <label>Tags (comma separated)</label><br>
+    <input type="text" name="tags" placeholder="e.g. workout, arms">
+  </div>
   <button type="submit">Save Note</button>
 </form>
-<hr>
+
 <h2>Saved Notes</h2>
 {{#if notes.length}}
   <ul>
     {{#each notes}}
-      <li>
-        <h3>{{this.title}}</h3>
-        <p>{{this.content}}</p>
-        <!-- Delete button -->
-        <form method="POST" action="/notes/delete/{{this.id}}" style="display:inline;">
-          <button type="submit">Delete</button>
-      </li>
-    {{/each}}
+    <li>
+    <h3>{{this.title}}</h3>
+    <p>{{this.content}}</p>
+      {{#if this.tagString}}
+        <p>Tags: {{this.tagString}}</p>
+        {{/if}}
+        <form method="POST" action="/notes/delete/{{this.id}}">
+        <button type="submit">Delete</button>
+      </form>
+  </li>
+  {{/each}}
   </ul>
+  <li>
 {{else}}
   <p>No notes yet.</p>
 {{/if}}

@@ -1,5 +1,5 @@
 <!-- pain page overlays/text -->
-
+<h1>SELECT PAIN LEVEL</h1>
 <div class="pageDescription">
   <div class="white-background">
     <div class="pain-level-container">
@@ -27,9 +27,14 @@
       <div class="pain-description" id="selected-pain">Selected Pain Level: None</div>
     </div>
   </div>
+
+<form action="/bookmarks" method="GET">
+  <input type="hidden" name="muscle" value="{{muscle}}"> <!-- from query string -->
+  <input type="hidden" name="painLevel" id="painLevel-input">
+  <button type="submit" class="next-button">NEXT</button>
+</form>
 </div>
 
-<h1>SELECT PAIN LEVEL</h1>
 
 <script>
   const painOverlays = document.querySelectorAll('.pain-overlay');
@@ -49,13 +54,3 @@
     });
   });
 </script>
-<!-- 
-<div id="start-tutorial" class="button">
-            <span class="pop-up-buttons">
-                <form action="/pain-level" method="GET">
-                    <button type="submit">NEXT</button>
-                </form>
-                <span class="arrow arrow-right"></span>
-            </span>
-    </div>
--->

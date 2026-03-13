@@ -1,0 +1,21 @@
+<div class="pageDescription">
+<h2>Selected Muscle and Pain-Level</h2>
+<p>Quads and Moderate</p>
+</div>
+
+<form id="bookmarkForm">
+  <input type="url" name="url" placeholder="URL" required>
+  <input type="text" name="title" placeholder="Title (optional)">
+  <button type="submit">Add Bookmark</button>
+</form>
+
+<ul id="bookmarkList">
+  {{#each bookmarks}}
+    <li id="{{this.id}}">
+      <a href="{{this.url}}" target="_blank"> {{this.title}} </a>
+      <button class="deleteBtn" data-id="{{this.id}}">Delete</button>
+    </li>
+  {{/each}}
+</ul>
+
+<script src="/bookmarks.js"></script>
