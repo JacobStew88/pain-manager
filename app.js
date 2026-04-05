@@ -9,6 +9,8 @@ const PORT = 3000
 const CALENDAR_SERVICE = "http://localhost:8080";
 const NOTES_SERVICE = "http://localhost:8081";
 const BOOKMARK_SERVICE = "http://localhost:9001";
+const TAGS_SERVICE = "http://localhost:9003";
+
 
 // Handlebars
 const { engine } = require('express-handlebars');
@@ -108,16 +110,21 @@ app.post('/download-ics', async (req, res) => {
 
 app.get('/notes', async (req, res) => {
   try {
-    const response = await fetch(`${NOTES_SERVICE}/notes`);
-    const notes = await response.json();
+    const noteResponse = await fetch(`${NOTES_SERVICE}/notes`);
+    let notes = await noteResponse.json();
 
-    // Convert tags array into comma-separated string for each note
-    const notesWithTagString = notes.map(note => ({
-      ...note,
-      tagString: note.tags ? note.tags.join(', ') : ''
+    // Fetch tags for each note from tag microservice
+    const notesWithTags = await Promise.all(notes.map(async note => {
+      const tagResp = await fetch(`${TAGS_SERVICE}/tags?tags=[]`); // could adjust to fetch by note ID
+      // Here you would filter by note.id
+      return {
+        ...note,
+        tags: note.tags || []
+      };
     }));
 
-    res.render('notes', { notes: notesWithTagString });
+    res.render('notes', { notes: notesWithTags });
+
   } catch (err) {
     console.error(err);
     res.status(500).send('Failed to load notes');
@@ -126,29 +133,46 @@ app.get('/notes', async (req, res) => {
 
 app.post('/notes', async (req, res) => {
   try {
-    // Prepare the request body
-    const body = {
+    // Prepare note
+    const tagsArray = req.body.tags
+      ? req.body.tags.split(',').map(t => t.trim()).filter(t => t.length > 0)
+      : [];
+
+    const noteBody = {
       title: req.body.title,
       content: req.body.content,
-      tags: req.body.tags
-        ? req.body.tags.split(',').map(t => t.trim()).filter(t => t.length > 0)
-        : []
+      tags: tagsArray
     };
 
-    console.log("Sending note to microservice:", body);
-
-    const response = await fetch(`${NOTES_SERVICE}/notes`, {
+    // 1️⃣ Send note to notes microservice
+    const noteResponse = await fetch(`${NOTES_SERVICE}/notes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      body: JSON.stringify(noteBody)
     });
 
-    if (!response.ok) throw new Error("Notes service failed");
+    if (!noteResponse.ok) throw new Error("Notes service failed");
+
+    const newNote = await noteResponse.json();
+
+    // 2️⃣ Send tags to Tag microservice
+    if (tagsArray.length > 0) {
+      const tagResponse = await fetch(`${TAGS_SERVICE}/tags`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          itemID: newNote.id, // associate tags with the new note
+          tags: tagsArray
+        })
+      });
+
+      if (!tagResponse.ok) throw new Error("Tags service failed");
+    }
 
     res.redirect('/notes');
 
   } catch (err) {
-    console.error("Failed to create note:", err);
+    console.error("Failed to create note or send tags:", err);
     res.status(500).send('Failed to create note');
   }
 });
